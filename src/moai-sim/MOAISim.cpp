@@ -1004,6 +1004,7 @@ void MOAISim::Update () {
 
 	double interval = this->MeasureFrameRate ();
 	this->ResetPerformanceTimers ();
+
 	
 	MOAIMainThreadTaskSubscriber::Get ().Publish ();
 	
@@ -1022,7 +1023,7 @@ void MOAISim::Update () {
 		}
 	}
 
-	interval = this->SmoothStep ( interval );
+//	interval = this->SmoothStep ( interval );
 	
 	// actual device time elapsed since starting or restarting the sim
 	this->mRealTime += interval;
@@ -1058,6 +1059,9 @@ void MOAISim::Update () {
 		budget -= this->StepSim ( 0.0, 1 );
 	}
 
+
+	this->StepSim ( interval, 1 );
+/*
 	// 'gap' is the time left to make up between sim time and real time
 	// i.e. the time deficit
 	double gap = this->mRealTime - this->mSimTime;
@@ -1130,6 +1134,8 @@ void MOAISim::Update () {
 	if (( this->mLoopFlags & SIM_LOOP_NO_SURPLUS ) && ( this->mRealTime < this->mSimTime )) {
 		this->mRealTime = this->mSimTime;
 	}
+
+	*/
 	
 	// Measure performance
 	double simEndTime = ZLDeviceTime::GetTimeInSeconds ();
